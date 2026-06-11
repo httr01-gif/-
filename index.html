@@ -36,7 +36,7 @@
     padding:18px 26px;border-bottom:1px solid var(--line);
   }
   .brand{display:flex;align-items:baseline;gap:12px;min-width:0;}
-  .brand .mark{font-weight:800;letter-spacing:-.02em;font-size:19px;}
+  .brand .mark{font-weight:800;letter-spacing:-.02em;font-size:19px;white-space:nowrap;}
   .brand .mark .ai{color:var(--accent);}
   .brand .tag{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.02em;white-space:nowrap;}
   .pill{font-size:11px;font-weight:600;color:#0f1320;background:var(--warn);
@@ -44,6 +44,14 @@
 
   main{max-width:1120px;margin:0 auto;padding:24px 22px 60px;
     display:grid;grid-template-columns:330px 1fr;gap:24px;}
+
+  @media (max-width:560px){
+    header{padding:13px 16px;gap:8px 12px;flex-wrap:wrap;}
+    .brand{flex-direction:column;align-items:flex-start;gap:2px;}
+    .brand .mark{font-size:17px;}
+    .brand .tag{font-size:9.5px;}
+    .pill{font-size:10px;padding:5px 10px;}
+  }
   @media (max-width:840px){ main{grid-template-columns:1fr;} }
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;}
@@ -260,11 +268,11 @@ function setRatioBoxes(){
 // ---- downscale to <=1024 long side, JPEG ----
 async function toScaledDataUrl(bitmapOrCanvas){
   const w0 = bitmapOrCanvas.width, h0 = bitmapOrCanvas.height;
-  const sc = Math.min(1, 1024/Math.max(w0,h0));
+  const sc = Math.min(1, 1536/Math.max(w0,h0));
   const w = Math.round(w0*sc), h = Math.round(h0*sc);
   const c = document.createElement("canvas"); c.width=w; c.height=h;
   c.getContext("2d").drawImage(bitmapOrCanvas,0,0,w,h);
-  return c.toDataURL("image/jpeg",0.92);
+  return c.toDataURL("image/jpeg",0.95);
 }
 
 function showSource(dataUrl){
