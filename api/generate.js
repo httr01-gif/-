@@ -57,12 +57,12 @@ export default async function handler(req, res) {
     const blob = new Blob([buf], { type: "image/png" });
 
     const form = new FormData();
-    form.append("model", "gpt-image-1");           // 필요 시 gpt-image-1.5 로 교체 가능
+    form.append("model", "gpt-image-1.5");          // 더 선명하고 빠른 최신 모델 (gpt-image-1 로 되돌릴 수 있음)
     form.append("image", blob, "input.png");
     form.append("prompt", buildPrompt({ bg, attire }));
     form.append("size", SIZE[ratio] || SIZE.portrait);
     form.append("input_fidelity", "high");          // 얼굴 보존 핵심
-    form.append("quality", "medium");               // Hobby 60s 제한 고려. high로 올리면 더 선명하지만 느림
+    form.append("quality", "high");                 // 선명도 우선. 시간 초과(504)가 나면 "medium"으로 낮추세요
     form.append("n", "1");
 
     const r = await fetch("https://api.openai.com/v1/images/edits", {
